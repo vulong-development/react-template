@@ -1,2 +1,2 @@
 # react-project
-React project template
+Шаблон проекта с использованием React.js
