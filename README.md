@@ -1,5 +1,7 @@
 # React project template
 
+![node-current](https://img.shields.io/node/v/gulp-sass)
+
  Шаблон проекта с использованием React.js
 
 Официальный сайт библиотеки react
