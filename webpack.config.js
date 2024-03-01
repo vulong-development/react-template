@@ -7,13 +7,20 @@ module.exports = {
     index: './src/index.js'
   },
   output: {
-    filename: '[name].js',
+    filename: '[name][contenthash].js',
+    chunkFilename: '[name][contenthash].chunk.js',
     path: path.resolve(__dirname, 'public'),
     publicPath: '/'
   },
   devServer: {
-    port: 8080,
+    host: '127.0.0.1',
+    port: 5501,
     historyApiFallback: true,
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -21,6 +28,14 @@ module.exports = {
     }),
     new CleanWebpackPlugin()
   ],
+
+  resolve: {
+    extensions: ['.js', '.scss'],
+    alias: {
+      'src': path.resolve(__dirname, 'src/'),
+      'components': path.resolve(__dirname, 'src/components/'),
+    }
+  },
 
   module: {
     rules: [
@@ -42,17 +57,27 @@ module.exports = {
         exclude: /(node_modules)/,
         loader: "babel-loader",
         options: {
+          sourceMap: true,
           presets: ["@babel/preset-react"]
         }
       },
       {
-        test: /\.css$/,
+        test: /\.scss$/,
         use: [
-          "style-loader",
+          {
+            loader: "style-loader"
+          },
           {
             loader: "css-loader",
             options: {
+              sourceMap: true,
               modules: true
+            }
+          },
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: true
             }
           }
         ]
